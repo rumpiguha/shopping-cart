@@ -1,7 +1,8 @@
 **Architectural Summary**
 
-Angular 9 application (scaffolded with angular-cli)
-Built backend with ASP.Net Core and Angular 9
+Angular 9 application (scaffolded with angular-cli).
+
+Built backend with ASP.Net Core and front-end has Angular 9
 
 Unit tested via Karma, Jasmine and MSTest.
 
