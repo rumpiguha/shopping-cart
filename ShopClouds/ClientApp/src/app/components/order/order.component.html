@@ -1,0 +1,51 @@
+<div class="container">
+<form [formGroup]="orderForm" (ngSubmit)="onSubmit()">
+    <div class="row">
+        <p class="message">Sign up to place your order</p>
+    </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="firstname">First Name</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="firstname" name="firstname" placeholder="Your name.." formControlName="firstname" [ngClass]="{'is-invalid': submitted && f.firstname.errors }">
+          <div *ngIf="submitted && f.firstname.errors" class="invalid-feedback">
+            <div *ngIf="f.firstname.errors.required">First Name is required</div>
+        </div>
+        </div>
+      
+    </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="lastname">Last Name</label>
+        </div>
+        <div class="col-75">
+          <input type="text" id="lastname" name="lastname" placeholder="Your last name.." formControlName="lastname" [ngClass]="{ 'is-invalid': submitted && f.lastname.errors }">
+          <div *ngIf="submitted && f.lastname.errors" class="invalid-feedback">
+            <div *ngIf="f.lastname.errors.required">Last Name is required</div>
+        </div>
+        </div>
+    
+    </div>
+    <div class="row">
+        <div class="col-25">
+          <label for="email">Email</label>
+        </div>
+        <div class="col-75">
+          <input type="email" id="email" name="email" placeholder="Your email.." formControlName="email" [ngClass]="{ 'is-invalid': submitted && f.email.errors }">
+          <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+            <div *ngIf="f.email.errors.required">Email is required</div>
+            <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
+        </div>
+        </div>       
+    </div>
+    <div class="row">
+        <input type="submit" value="Submit" class="checkOut">
+    </div>
+
+</form>
+
+</div>
+<div *ngIf="orderStatus">
+    <label id="orderLbl">{{orderStatus}}</label>
+ </div>

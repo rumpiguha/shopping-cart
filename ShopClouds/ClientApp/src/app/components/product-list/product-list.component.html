@@ -1,0 +1,53 @@
+<div *ngIf="products.data">
+
+  <div class="mat-elevation-z8">
+    <mat-table [dataSource]="products">
+      <ng-container matColumnDef="productId">
+        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.productId}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef>Product </mat-header-cell>
+        <mat-cell *matCellDef="let item"> {{item.name}} </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="unitPrice">
+        <mat-header-cell *matHeaderCellDef>Price </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          {{item.unitPrice | currency: selectedCurrency}}
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="maximumQuantity">
+        <mat-header-cell *matHeaderCellDef>Quantity </mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <mat-form-field>
+            <input mdInput type="number" (change)="quantityChanged($event, item.productId)">
+
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+      <ng-container matColumnDef="view">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let item">
+          <mat-form-field>
+            <button mat-button (click)="openDialog(item)">View Details</button>
+
+          </mat-form-field>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+  
+  </div>
+</div>
+<br>
+<div>
+  <div class="btnWrapper">
+    <button class="checkOut" #cartBtn (click)="goToCart()">Go to Cart</button>
+  </div>
+  <div class="totalPrice">
+    <label>Total Price</label>
+    <label *ngIf="totalCost > 0" class="price">{{totalCost | currency:selectedCurrency }}</label>
+  </div>
+</div>

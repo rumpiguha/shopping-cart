@@ -1,0 +1,35 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+.message{
+    font-size: x-large;
+}
+
+.checkOut{
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: left;
+    align-items: center;
+    justify-content: center;
+}
+.dialogBtn{
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    display: block;
+    width: 13%;
+    margin-left: 40%;
+    margin-top: 5%;
+}
+.modalTitle{
+    text-decoration: underline;
+}
+.mat-header-cell{
+    font-weight: bold;
+}
+

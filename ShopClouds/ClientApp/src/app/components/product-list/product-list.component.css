@@ -1,0 +1,17 @@
+.mat-row:nth-child(even){
+    background-color:lightgray;
+    }
+
+.mat-header-cell{
+    font-weight: bold;
+}
+
+.totalPrice{
+    padding-top: 2%;
+    padding-inline-start: 75%;
+    font-weight: bold;
+}
+
+.price{
+    padding-inline-start: 40%;
+}
