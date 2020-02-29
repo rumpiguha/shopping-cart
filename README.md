@@ -23,4 +23,5 @@ Install the npm dependencies within ClientApp folder of the solution.
 ```*npm run start*```
 
 Then in Visual Studio solution, run/start the solution with start up project as **ShopClouds**.
+
 Then navigate to http://localhost:4200/
