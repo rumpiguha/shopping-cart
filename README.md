@@ -10,7 +10,7 @@ Minimal styling with Material Theme used as the base framework and SCSS used to 
 
 **Setup**
 
-Install the npm dependencies
+Install the npm dependencies within ClientApp folder of the solution.
 
 *npm install*
 
