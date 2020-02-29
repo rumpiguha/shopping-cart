@@ -12,6 +12,7 @@ import { FxRateService } from 'src/app/services/fx-rate.service';
 import { FxRate } from 'src/app/models/fxrate';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { DialogComponent } from 'src/app/dialog/dialog.component';
+import { Overlay } from '@angular/cdk/overlay';
 
 @Component({
   selector: 'app-product-list',
@@ -35,6 +36,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
     private fxRateService: FxRateService,
     private sharedService : SharedService,
     public dialog: MatDialog,
+    public overlay: Overlay,
     private router: Router) { }
 
   async ngOnInit() {
@@ -123,9 +125,10 @@ export class ProductListComponent implements OnInit, OnDestroy {
         name: item.name,
         description: item.description
       },
-      height: '38%',
-      width: '40%'
-    });
+      height: 'auto',
+      width: '40%',
+      scrollStrategy: this.overlay.scrollStrategies.noop()
+    }); 
   }
 
   ngOnDestroy(){
