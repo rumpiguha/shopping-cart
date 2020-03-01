@@ -10,14 +10,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  public finalItems = new MatTableDataSource<[]>();
+  public finalItems = new MatTableDataSource<any>();
   public displayedColumns = ['name', 'quantity', 'totalprice'];
+  public totalCost:number = 0;
   public constructor(
     private sharedService : SharedService,
     private router: Router) { }
 
   ngOnInit() {
     this.finalItems.data =  this.sharedService.getCartItems();
+    if(!!this.finalItems.data){
+      this.totalCost = this.finalItems.data.reduce((sum, cur) => sum + cur.totalprice, 0);
+    }
   }
  
     goBack()

@@ -27,7 +27,7 @@
    
     <div class="totalPrice">
       <label >Total Price</label>
-      <label class="price">{{this.finalItems.data[0].cartTotal | currency:selectedCurrency }}</label>
+      <label class="price">{{totalCost | currency:selectedCurrency }}</label>
     </div>
     <div class="btnDiv" >
       <button class="back" #backBtn (click)="goBack()">Back</button>
