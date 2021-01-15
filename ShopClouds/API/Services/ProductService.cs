@@ -1,46 +1,40 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ShopClouds;
+using ShopClouds.API.Services;
 using ShoppingCart.API.Interfaces;
 using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace ShoppingCart.API.Services
 {
-    public class ProductService : IProductService
+    public class ProductService : BaseService, IProductService
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger _logger;
+        private readonly ILogger<ProductService> _logger;
 
-        private ApiSettings ApiSettings { get; set; }
-
-        public ProductService(HttpClient httpClient, IOptions<ApiSettings> settings, ILoggerFactory logFactory)
+        public ProductService(HttpClient httpClient, IOptions<ApiSettings> settings, ILogger<ProductService> logger) :
+            base(httpClient, settings)
         {
-            ApiSettings = settings.Value;
-            httpClient.BaseAddress = new Uri(ApiSettings.BaseUrl, UriKind.Absolute);
-            _httpClient = httpClient;
-            _logger = logFactory.CreateLogger<ProductService>();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<List<Product>> GetProductListAsync()
         {
-           
-            _httpClient.DefaultRequestHeaders.Add("api-key", ApiSettings.ApiKey);
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+            var response = await Client.GetAsync("Products");
+            _logger.LogInformation($"Service: {nameof(ProductService)} Method: {nameof(GetProductListAsync)}, Message: API Response Status Code: {response.StatusCode}");
 
-            var response = await _httpClient.GetAsync("Products");
-
-            _logger.LogInformation($"Calling API: {_httpClient.BaseAddress}Products");
-            _logger.LogInformation($"API Response Status Code: {response.StatusCode}");
-            if (response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode)
             {
-                return await response.Content.ReadAsAsync<List<Product>>();
+                _logger.LogError($"Service: {nameof(ProductService)} Method: {nameof(GetProductListAsync)}, Message: Error while fetching Clouds.");
+                return null;
             }
-            return new List<Product>();
+
+            return await response.Content.ReadAsAsync<List<Product>>();
         }
     }
 }

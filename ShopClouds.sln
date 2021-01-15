@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.852
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopClouds", "ShopClouds\ShopClouds.csproj", "{447D5BDD-34D0-4F45-B0A1-4D1B0298EE5E}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ControllerTest", "ControllerTest\ControllerTest.csproj", "{F024B142-8BAD-49ED-88DA-97C7943539C9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ShopCloudsTest", "ControllerTest\ShopCloudsTest.csproj", "{F024B142-8BAD-49ED-88DA-97C7943539C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

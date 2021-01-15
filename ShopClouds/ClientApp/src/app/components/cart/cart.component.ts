@@ -23,7 +23,6 @@ export class CartComponent implements OnInit {
       this.totalCost = this.finalItems.data.reduce((sum, cur) => sum + cur.totalprice, 0);
     }
   }
- 
     goBack()
     {
       this.router.navigate(['product']);

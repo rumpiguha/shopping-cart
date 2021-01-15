@@ -1,43 +1,42 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using ShopClouds;
+using ShopClouds.API.Services;
 using ShoppingCart.API.Interfaces;
 using ShoppingCart.Models;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Web.Http;
 
 namespace ShoppingCart.API.Services
 {
-    public class CurrencyService : ICurrencyService
+    public class CurrencyService : BaseService, ICurrencyService
     {
-        private readonly HttpClient _httpClient;
-        private readonly ILogger _logger;
+        private readonly ILogger<CurrencyService> _logger;
 
-        private ApiSettings ApiSettings { get; set; }
-
-        public CurrencyService(HttpClient httpClient, IOptions<ApiSettings> settings, ILoggerFactory logFactory)
+        public CurrencyService(HttpClient httpClient, IOptions<ApiSettings> settings, ILogger<CurrencyService> logger) :
+             base(httpClient, settings)
         {
-            ApiSettings = settings.Value;
-            httpClient.BaseAddress = new Uri(ApiSettings.BaseUrl, UriKind.Absolute);
-            _httpClient = httpClient;
-            _logger = logFactory.CreateLogger<CurrencyService>();
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         public async Task<List<ExchangeRate>> GetFxRatesAsync()
         {
-            _httpClient.DefaultRequestHeaders.Add("api-key", ApiSettings.ApiKey);
-            _httpClient.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-
-            var response = await _httpClient.GetAsync("fx-rates");
-            _logger.LogInformation($"Calling API: {_httpClient.BaseAddress}fx-rates");
-            _logger.LogInformation($"API Response Status Code: {response.StatusCode}");
-            if (response.IsSuccessStatusCode)
+            var response = await Client.GetAsync("fx-rates");
+            _logger.LogInformation($"Service: {nameof(CurrencyService)} Method: {nameof(GetFxRatesAsync)}, Message: API Response Status Code: {response.StatusCode}");
+            if (!response.IsSuccessStatusCode)
+            {
+                _logger.LogError($"Service: {nameof(CurrencyService)} Method: {nameof(GetFxRatesAsync)}, Message: Error while fetching ExchangeRates.");
+                throw new HttpResponseException(new HttpResponseMessage(HttpStatusCode.InternalServerError)
+                {
+                    Content = new StringContent("Error while fetching ExchangeRates."),
+                    ReasonPhrase = "Critical Exception"
+                });
+            }
             return await response.Content.ReadAsAsync<List<ExchangeRate>>();
-
-            return new List<ExchangeRate>();
         }
     }
 }

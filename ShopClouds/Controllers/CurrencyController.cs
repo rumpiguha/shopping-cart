@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.API.Interfaces;
 using ShoppingCart.Models;
@@ -17,7 +15,7 @@ namespace ShoppingCart.Controllers
 
         public CurrencyController(ICurrencyService currencyService)
         {
-            _currencyService = currencyService;
+            _currencyService = currencyService ?? throw new ArgumentNullException(nameof(currencyService));
         }
 
         [HttpGet, Route("getRates")]

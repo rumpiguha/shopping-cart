@@ -15,6 +15,7 @@ import { EnumKeyValueListPipe } from './enumlist.pipe';
 import { FxRateService } from './services/fx-rate.service';
 import { OrderComponent } from './components/order/order.component';
 import { DialogComponent } from './dialog/dialog.component';
+import { OnlynumberDirective } from './shared/number.directive';
 
 const appRoutes: Routes = [
   {
@@ -41,7 +42,8 @@ const appRoutes: Routes = [
     EnumKeyValueListPipe,
     CartComponent,
     OrderComponent,
-    DialogComponent
+    DialogComponent,
+    OnlynumberDirective
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),

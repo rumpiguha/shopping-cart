@@ -13,7 +13,6 @@
             <div *ngIf="f.firstname.errors.required">First Name is required</div>
         </div>
         </div>
-      
     </div>
     <div class="row">
         <div class="col-25">
@@ -25,7 +24,6 @@
             <div *ngIf="f.lastname.errors.required">Last Name is required</div>
         </div>
         </div>
-    
     </div>
     <div class="row">
         <div class="col-25">
@@ -37,15 +35,14 @@
             <div *ngIf="f.email.errors.required">Email is required</div>
             <div *ngIf="f.email.errors.email">Email must be a valid email address</div>
         </div>
-        </div>       
+        </div>
     </div>
     <div class="row">
-        <input type="submit" value="Submit" class="checkOut">
+      <button class="back" #backCartBtn (click)="goBack()">Back</button>
+      <input type="submit" value="Submit" class="checkOut">
     </div>
-
 </form>
-
 </div>
 <div *ngIf="orderStatus">
     <label id="orderLbl">{{orderStatus}}</label>
- </div>
+</div>

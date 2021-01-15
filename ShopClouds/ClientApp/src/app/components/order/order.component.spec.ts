@@ -15,7 +15,7 @@ describe('OrderComponent', () => {
     TestBed.configureTestingModule({
       declarations: [ OrderComponent ],
       providers: [SharedService, OrderService, FormBuilder],
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule,RouterTestingModule],
     })
     .compileComponents();
     fixture = TestBed.createComponent(OrderComponent);

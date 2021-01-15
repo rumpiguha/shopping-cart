@@ -2,7 +2,7 @@
 <body>
   <div class="title">
     <label>Pick your favourite Cloud..</label>
-    <div class="cur">
+    <div class="cur" *ngIf="router.url == '/product'">
       <select  (change)="onChange($event.target.value)">
         <option *ngFor="let item of keys(currencies)" [ngValue]="item">{{currencies[item]}}</option>
       </select>

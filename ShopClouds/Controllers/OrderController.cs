@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using ShoppingCart.API.Interfaces;
 using ShoppingCart.Models;
 
@@ -13,16 +12,25 @@ namespace ShoppingCart.Controllers
     public class OrderController : ControllerBase
     {
         private readonly IOrderService _orderService;
+        private readonly ILogger<OrderController> _logger;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, ILogger<OrderController> logger)
         {
-            _orderService = orderService;
+            _orderService = orderService ?? throw new ArgumentNullException(nameof(orderService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
         [HttpPost]
-        public async Task<string> SubmitOrder(Order order)
+        public async Task<IActionResult> SubmitOrder(Order order)
         {
-            return await _orderService.SubmitOrder(order);
+            if (!ModelState.IsValid)
+            {
+                _logger.LogWarning($"Controller: {nameof(OrderController)}, Action: {nameof(SubmitOrder)}, Message: Invalid Request");
+
+                return BadRequest(ModelState);
+            }
+
+            return new OkObjectResult(await _orderService.SubmitOrder(order));
         }
     }
 }

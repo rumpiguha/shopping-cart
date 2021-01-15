@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Order } from 'src/app/models/order';
 import { SharedService } from 'src/app/services/shared-service';
 import { OrderService } from 'src/app/services/order.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-order',
@@ -16,8 +17,9 @@ export class OrderComponent implements OnInit {
   orderStatus: string;
   constructor(private fb: FormBuilder,
     private sharedService : SharedService,
-    private orderService: OrderService
-    ) { 
+    private orderService: OrderService,
+    private router: Router
+    ) {
       this.createForm();
     }
 
@@ -32,16 +34,19 @@ export class OrderComponent implements OnInit {
       email: ['', [Validators.required, Validators.email] ]
     });
   }
-  
-  get f() { 
+  get f() {
     return this.orderForm.controls;
-   }
- 
+  }
+
+  goBack() {
+    this.router.navigate(['cart']);
+  }
+
   onSubmit() {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.orderForm.invalid) { 
+    if (this.orderForm.invalid) {
         return;
     }
 
@@ -58,7 +63,6 @@ export class OrderComponent implements OnInit {
           this.orderStatus = res.toString();
         }
       );
-      
     }
-}
+  }
 }

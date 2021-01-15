@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ShoppingCart.API.Interfaces;
 using ShoppingCart.Models;
@@ -17,13 +15,13 @@ namespace ShoppingCart.Controllers
 
         public ProductController(IProductService productService)
         {
-            _productService = productService;
+            _productService = productService ?? throw new ArgumentNullException(nameof(productService));
         }
 
         [HttpGet, Route("getAll")]
-        public async Task<ActionResult<List<Product>>> GetProductList()
+        public async Task<IActionResult> GetProductList()
         {
-           return await _productService.GetProductListAsync();
+           return new OkObjectResult(await _productService.GetProductListAsync());
         }
 
     }
